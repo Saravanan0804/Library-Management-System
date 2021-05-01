@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import "materialize-css/dist/css/materialize.min.css";
+import NavBar from './layouts/NavBar';
 import Login from './authentication/Login';
-import Addbook from './authentication/addbook';
-
-
+import SignUp from './authentication/SignUp';
+import Footer from "./layouts/Footer";
+import Dashboard from "./authentication/Dashboard";
 
 function App() {
   const [user, setUser] = useState('');
@@ -24,6 +26,9 @@ function App() {
     <>
       {user !== null ? (
         <>
+        <NavBar setUserState={() => setUser(null)}/>
+        <Dashboard />
+        <Footer />
         </>
       ) : (
          <>

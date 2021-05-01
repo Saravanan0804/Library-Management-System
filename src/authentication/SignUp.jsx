@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import {
-    Container, CssBaseline, Avatar, Typography,
-    Button, Grid, Link, makeStyles, Card, CardContent
-} from '@material-ui/core';
-import { LockRounded } from '@material-ui/icons';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { ToastContainer, toast } from 'react-toastify';
+import React, {useEffect, useState} from 'react';
+import {Container, CssBaseline, Avatar, Typography, 
+    Button, Grid, Link, makeStyles, Card, CardContent} from '@material-ui/core';
+import {LockRounded} from '@material-ui/icons';
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import fire from '../helpers/db';
+import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 
 
@@ -14,7 +13,7 @@ const SignUp = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
+    
     const handleEmail = (event) => {
         setEmail(event.target.value);
     }
@@ -28,7 +27,7 @@ const SignUp = (props) => {
         fire.auth()
             .createUserWithEmailAndPassword(email, password)
             .then(response => {
-                if (response) {
+                if(response) {
                     props.toggle();
                     toast.success('User Registered Successfully');
                 }
@@ -37,8 +36,8 @@ const SignUp = (props) => {
                     case 'auth/email-already-in-use':
                         toast.error(error.message);
                         break;
-                    case 'auth/invalid-email':
-                        toast.error(error.message);
+                    case 'auth/invalid-email': 
+                        toast.error(error.message);                    
                         break;
                     case 'auth/weak-password':
                         toast.error(error.message);
@@ -49,7 +48,7 @@ const SignUp = (props) => {
 
     useEffect(() => {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-            if (value !== password) {
+            if(value !== password) {
                 return false;
             }
             return true;
@@ -62,19 +61,19 @@ const SignUp = (props) => {
         <Container component="main" maxWidth="xs">
             <Card className={classes.card}>
                 <CardContent>
-                    <ToastContainer />
-                    <CssBaseline />
+                    <ToastContainer/>
+                    <CssBaseline/>
                     <div className={classes.paper}>
                         <Avatar className={classes.avatar}>
-                            <LockRounded />
+                            <LockRounded/>
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign Up
                         </Typography>
-                        <ValidatorForm
-                            onSubmit={handleSignUp}
-                            className={classes.form}>
-                            <TextValidator
+                        <ValidatorForm 
+                         onSubmit={handleSignUp}
+                         className={classes.form}>
+                        <TextValidator
                                 variant="outlined"
                                 margin="normal"
                                 fullWidth
@@ -86,7 +85,7 @@ const SignUp = (props) => {
                                 errorMessages={['this field is required', 'email is not valid']}
                                 autoComplete='off'
                             />
-                            <br />
+                            <br/>
                             <TextValidator
                                 variant="outlined"
                                 fullWidth
@@ -99,7 +98,7 @@ const SignUp = (props) => {
                                 errorMessages={['this field is required']}
                                 autoComplete="off"
                             />
-                            <br />
+                            <br/>
                             <TextValidator
                                 variant="outlined"
                                 label="Confirm password"
@@ -112,7 +111,7 @@ const SignUp = (props) => {
                                 value={confirmPassword}
                                 autoComplete="off"
                             />
-                            <Button
+                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
@@ -122,9 +121,9 @@ const SignUp = (props) => {
                             </Button>
                             <Grid container>
                                 <Grid item>
-                                    <Link onClick={props.toggle} className={classes.pointer} variant="body2">
-                                        {"Already have an account? Sign In"}
-                                    </Link>
+                                <Link onClick={props.toggle} className={classes.pointer} variant="body2">
+                                    {"Already have an account? Sign In"}
+                                </Link>
                                 </Grid>
                             </Grid>
                         </ValidatorForm>
@@ -141,29 +140,29 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    avatar: {
+      },
+      avatar: {
         margin: theme.spacing(1),
         backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
+      },
+      form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
-    },
-    submit: {
-        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-        margin: theme.spacing(3, 0, 2),
-        color: '#fff'
-    },
-    card: {
-        marginTop: '60px',
-        paddingLeft: '20px',
-        paddingRight: '20px',
-        paddingBottom: '20px',
-    },
-    pointer: {
-        cursor: 'pointer',
-        color: 'red'
-    }
+      },
+      submit: {
+          background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+          margin: theme.spacing(3, 0, 2),
+          color: '#fff'
+      },
+      card: {
+          marginTop: '60px',
+          paddingLeft: '20px',
+          paddingRight: '20px',
+          paddingBottom: '20px',
+      },
+      pointer: {
+          cursor: 'pointer',
+          color: 'red'
+      }
 }))
 export default SignUp;
